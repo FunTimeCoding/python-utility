@@ -1,4 +1,5 @@
 class PythonUtility:
-    def run(self):
+    @staticmethod
+    def run():
         print('Hello World')
         return 0

@@ -1,4 +1,4 @@
-from lib.python_utility import PythonUtility
+from python_utility.python_utility import PythonUtility
 
 
 def test_return_code():

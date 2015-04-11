@@ -33,24 +33,26 @@ PYTHONPATH=. bin/pu
 Install development tools.
 
 ```sh
-pip3 install -U pytest pytest-cov pylint pep8
+pip3 install -U -r requirements.txt
 ```
 
 Run code style check, lint check and tests.
 
 ```sh
-./run-code-style-check.sh
+./run-style-check.sh
 ./run-lint-check.sh
 ./run-tests.sh
 ```
 
-Run `ant` like Jenkins. Requires `ant` to be installed. This generates reports in the `build` directory.
+Build project like Jenkins.
 
 ```sh
-ant
+./build.sh
 ```
 
 
 ## Skeleton details
 
 * The reason why the `tests` directory is not called `test` is because a package named `test` exists.
+* The main source code directory is the same name as the package in python packages.
+* Dashes in project names become underscores in python code. They are still legit.

@@ -1,18 +1,16 @@
 #!/bin/sh -e
 
-ARGS=$(getopt -o w:p:hcv -l workspace:,pythonhome:,help,clean,verbose --name "${0}" -- "$@")
+getopt -o w:p:hcv -l workspace:,pythonhome:,help,clean,verbose --name "${0}" -- "$@" > /dev/null
 CLEAN=0
 
 while true; do
     case ${1} in
         -w|--workspace)
-            WORKSPACE=(${2-})
-            echo "workspace: ${WORKSPACE}"
+            WORKSPACE="${2-}"
             shift 2
             ;;
         -p|--pythonhome)
-            PYTHONHOME=(${2-})
-            echo "pythonhome: ${PYTHONHOME}"
+            PYTHONHOME="${2-}"
             shift 2
             ;;
         -h|--help)
@@ -41,33 +39,43 @@ while true; do
 done
 
 if [ "${WORKSPACE}" = "" ]; then
-    SCRIPT_DIR=$(cd $(dirname ${0}); pwd)
+    DIR=$(dirname "${0}")
+    SCRIPT_DIR=$(cd "${DIR}"; pwd)
     WORKSPACE="${SCRIPT_DIR}"
 fi
+
 echo "WORKSPACE: ${WORKSPACE}"
 
+if [ "${CLEAN}" = "1" ]; then
+    "${WORKSPACE}/clear-cache.sh"
+fi
+
 if [ ! "${PYTHONHOME}" = "" ]; then
+    echo "PYTHONHOME: ${PYTHONHOME}"
     export PATH="${PYTHONHOME}/bin:${PATH}"
 fi
-echo "PATH: ${PATH}"
 
+echo "PATH: ${PATH}"
 BUILD_DIR="${WORKSPACE}/build"
+
 if [ -d "${BUILD_DIR}" ]; then
     rm -rf "${BUILD_DIR}"
 fi
-mkdir -p "${BUILD_DIR}/log"
 
+mkdir -p "${BUILD_DIR}/log"
 PYVENV_HOME="${WORKSPACE}/.pyvenv"
-if [ "${CLEAN}" = "1" ]; then
-    rm -rf "${PYVENV_HOME}"
-fi
+
+echo "Creating pyvenv."
+
 if [ ! -d "${PYVENV_HOME}" ]; then
     pyvenv "${PYVENV_HOME}"
 fi
-source "${PYVENV_HOME}/bin/activate"
-pip3 install -U -r "${WORKSPACE}/requirements.txt" &> "${BUILD_DIR}/log/pip.log"
 
-"${WORKSPACE}"/run-lint-check.sh --ci-mode
-"${WORKSPACE}"/run-style-check.sh --ci-mode
-"${WORKSPACE}"/run-metrics.sh --ci-mode
-"${WORKSPACE}"/run-tests.sh --ci-mode
+echo "Installing requirements."
+. "${PYVENV_HOME}/bin/activate"
+pip3 install --upgrade pip
+pip3 install --upgrade -r "${WORKSPACE}/requirements.txt" | tee build/log/pip.log
+
+"${WORKSPACE}/run-style-check.sh" --ci-mode
+"${WORKSPACE}/run-metrics.sh" --ci-mode
+"${WORKSPACE}/run-tests.sh" --ci-mode

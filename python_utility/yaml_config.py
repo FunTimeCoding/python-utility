@@ -11,6 +11,7 @@ class YamlConfig:
             self.path = expanduser(path)
             stream = open(self.path, 'r')
             elements = yaml.load_all(stream)
+
             for dictionary in elements:
                 for key, value in dictionary.items():
                     self.settings[key] = value
@@ -18,15 +19,20 @@ class YamlConfig:
             stream.close()
 
     def exists(self) -> bool:
+        result = False
+
         if isfile(self.path):
-            return True
-        return False
+            result = True
+
+        return result
 
     def contains(self, key: str):
-        if key in self.settings:
-            return True
+        result = False
 
-        return False
+        if key in self.settings:
+            result = True
+
+        return result
 
     def get(self, key: str) -> str:
         return self.settings.get(key, '')

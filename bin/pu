@@ -3,8 +3,8 @@ from python_utility.python_utility import PythonUtility
 
 
 def main():
-    pu = PythonUtility()
-    return pu.run()
+    application = PythonUtility()
+    return application.run()
 
 if __name__ == '__main__':
     main()

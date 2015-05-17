@@ -1,5 +1,10 @@
 class PythonUtility:
     @staticmethod
     def run():
-        print('Hello World')
+        PythonUtility.print_hello()
+
         return 0
+
+    @staticmethod
+    def print_hello():
+        print('Hello World')

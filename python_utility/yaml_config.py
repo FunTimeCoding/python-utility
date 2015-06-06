@@ -5,10 +5,9 @@ from os.path import expanduser, isfile
 class YamlConfig:
     def __init__(self, path: str=''):
         self.settings = {}
-        self.path = path
+        self.path = expanduser(path)
 
         if self.exists():
-            self.path = expanduser(path)
             stream = open(self.path, 'r')
             elements = yaml.load_all(stream)
 

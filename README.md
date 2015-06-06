@@ -30,10 +30,22 @@ Run the main script without having to install the project.
 PYTHONPATH=. bin/pu
 ```
 
-Install development tools.
+Install tools on OS X.
 
 ```sh
-pip3 install -U -r requirements.txt
+brew install shellcheck python3
+```
+
+Install tools on Debian Jessie.
+
+```sh
+apt-get install shellcheck python3-dev python3-pip python3-venv
+```
+
+Install pip requirements.
+
+```sh
+pip3 install --upgrade --user --requirement requirements.txt
 ```
 
 Run code style check, lint check and tests.

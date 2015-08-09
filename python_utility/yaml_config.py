@@ -1,5 +1,6 @@
-import yaml
 from os.path import expanduser, isfile
+
+import yaml
 
 
 class YamlConfig:
@@ -8,14 +9,14 @@ class YamlConfig:
         self.path = expanduser(path)
 
         if self.exists():
-            stream = open(self.path, 'r')
-            elements = yaml.load_all(stream)
+            input_file = open(self.path, 'r')
+            elements = yaml.load_all(input_file)
 
             for dictionary in elements:
                 for key, value in dictionary.items():
                     self.settings[key] = value
 
-            stream.close()
+            input_file.close()
 
     def exists(self) -> bool:
         result = False
@@ -43,6 +44,6 @@ class YamlConfig:
         return self.settings.pop(key, None)
 
     def save(self):
-        stream = open(self.path, 'w')
-        stream.write(yaml.dump(self.settings, default_flow_style=False))
-        stream.close()
+        output_file = open(self.path, 'w')
+        output_file.write(yaml.dump(self.settings, default_flow_style=False))
+        output_file.close()

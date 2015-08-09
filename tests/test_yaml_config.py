@@ -1,6 +1,7 @@
-from python_utility.yaml_config import YamlConfig
 from os import remove
 from os.path import isfile
+
+from python_utility.yaml_config import YamlConfig
 
 
 def test_set_get_remove():
@@ -50,13 +51,13 @@ def test_write_and_read():
     assert isfile(file) == False
 
     # file should be created
-    writing_config = YamlConfig(file)
-    writing_config.set('my-key', 'my-value')
-    writing_config.save()
+    output_file = YamlConfig(file)
+    output_file.set('my-key', 'my-value')
+    output_file.save()
 
     # file should contain something
-    reading_config = YamlConfig(file)
-    assert reading_config.get('my-key') == 'my-value'
+    input_file = YamlConfig(file)
+    assert input_file.get('my-key') == 'my-value'
 
     # file should be gone
     remove(file)

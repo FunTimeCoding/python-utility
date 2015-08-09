@@ -24,12 +24,6 @@ pip3 uninstall python-utility
 
 ## Development
 
-Run the main script without having to install the project.
-
-```sh
-PYTHONPATH=. bin/pu
-```
-
 Install tools on OS X.
 
 ```sh

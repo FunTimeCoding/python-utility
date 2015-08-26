@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+
+from curses import wrapper
+
+from python_utility.console_interface import ConsoleInterface
+
+
+def main(standard_screen):
+    application = ConsoleInterface(standard_screen)
+    application.start()
+
+
+wrapper(main)

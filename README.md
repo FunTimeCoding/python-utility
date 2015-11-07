@@ -6,7 +6,7 @@
 Install the project from a local clone.
 
 ```sh
-pip3 install --user --editable ../python-utility
+pip3 install --user --editable .
 ```
 
 Install the project from GitHub.
@@ -42,11 +42,11 @@ Install pip requirements.
 pip3 install --upgrade --user --requirement requirements.txt
 ```
 
-Run code style check, lint check and tests.
+Run code style check, metrics and tests.
 
 ```sh
 ./run-style-check.sh
-./run-lint-check.sh
+./run-metrics.sh
 ./run-tests.sh
 ```
 

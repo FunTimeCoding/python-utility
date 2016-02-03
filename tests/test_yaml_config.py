@@ -8,17 +8,17 @@ def test_set_get_remove():
     config = YamlConfig()
 
     # should be empty
-    assert config.contains('my-key') == False
+    assert config.contains('my-key') is False
     assert config.get('my-key') == ''
 
     # should contain something
     config.set('my-key', 'my-value')
-    assert config.contains('my-key') == True
+    assert config.contains('my-key') is True
     assert config.get('my-key') == 'my-value'
 
     # should remove something
     config.remove('my-key')
-    assert config.contains('my-key') == False
+    assert config.contains('my-key') is False
     assert config.get('my-key') == ''
 
 
@@ -28,18 +28,18 @@ def test_save():
     # file should not exist
     if isfile(file):
         remove(file)
-    assert isfile(file) == False
+    assert isfile(file) is False
 
     # file should be created on save
     config = YamlConfig(file)
-    assert isfile(file) == False
+    assert isfile(file) is False
     config.save()
-    assert config.exists() == True
-    assert isfile(file) == True
+    assert config.exists() is True
+    assert isfile(file) is True
 
     # file should be gone
     remove(file)
-    assert isfile(file) == False
+    assert isfile(file) is False
 
 
 def test_write_and_read():
@@ -48,7 +48,7 @@ def test_write_and_read():
     # file should not exist
     if isfile(file):
         remove(file)
-    assert isfile(file) == False
+    assert isfile(file) is False
 
     # file should be created
     output_file = YamlConfig(file)
@@ -61,4 +61,4 @@ def test_write_and_read():
 
     # file should be gone
     remove(file)
-    assert isfile(file) == False
+    assert isfile(file) is False

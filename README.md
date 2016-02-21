@@ -1,6 +1,19 @@
 # PythonUtility
 
+## Usage
+
+This section explains how to use this project.
+
+Run the main entry point program.
+
+```sh
+PYTHONPATH=. bin/pu
+```
+
+
 ## Setup
+
+This section explains how to install this project and how to include it in another.
 
 Install the project from a local clone.
 
@@ -29,11 +42,7 @@ git+ssh://git@github.com/FunTimeCoding/python-utility.git#egg=python-utility
 
 ## Development
 
-Run the main script without installing the project.
-
-```sh
-PYTHONPATH=. bin/pu
-```
+This section explains how to use scripts that are intended to ease the development of this project.
 
 Install tools on Debian Jessie.
 

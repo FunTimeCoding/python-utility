@@ -4,7 +4,7 @@ from os.path import isfile
 from python_utility.yaml_config import YamlConfig
 
 
-def test_set_get_remove():
+def test_set_get_remove() -> None:
     config = YamlConfig()
 
     # should be empty
@@ -22,7 +22,7 @@ def test_set_get_remove():
     assert config.get('my-key') == ''
 
 
-def test_save():
+def test_save() -> None:
     file = '/tmp/example.yml'
 
     # file should not exist

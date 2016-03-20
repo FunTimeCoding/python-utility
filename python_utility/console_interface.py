@@ -6,7 +6,7 @@ class ConsoleInterface:
     def __init__(self, screen):
         self.screen = screen
 
-    def start(self):
+    def start(self) -> None:
         position_y = 0
         position_x = 0
         message = 'ctrl-g to send message'
@@ -17,7 +17,7 @@ class ConsoleInterface:
         except KeyboardInterrupt:
             pass
 
-    def loop(self):
+    def loop(self) -> None:
         # stdscr.clear()
         # stdscr.getkey()
 

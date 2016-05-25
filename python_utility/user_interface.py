@@ -2,20 +2,29 @@ import curses
 from curses.textpad import rectangle, Textbox
 
 
-class ConsoleInterface:
-    def __init__(self, screen):
+class UserInterface:
+    def __init__(self, arguments: list, screen):
+        self.arguments = arguments
         self.screen = screen
 
-    def start(self) -> None:
-        position_y = 0
-        position_x = 0
-        message = 'ctrl-g to send message'
-        self.screen.addstr(position_y, position_x, message)
+    def run(self) -> int:
+        if self.screen is None:
+            exit_code = 1
+            print('Screen is not set.')
+        else:
+            position_y = 0
+            position_x = 0
+            message = 'ctrl-g to send message'
+            self.screen.addstr(position_y, position_x, message)
 
-        try:
-            self.loop()
-        except KeyboardInterrupt:
-            pass
+            try:
+                self.loop()
+            except KeyboardInterrupt:
+                pass
+
+            exit_code = 0
+
+        return exit_code
 
     def loop(self) -> None:
         # stdscr.clear()

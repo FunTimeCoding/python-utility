@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 
-from curses import wrapper
+from sys import exit
+from sys import argv
+from python_utility.python_utility import PythonUtility
 
-from python_utility.console_interface import ConsoleInterface
-
-
-def main(standard_screen):
-    application = ConsoleInterface(standard_screen)
-    application.start()
-
-
-wrapper(main)
+application = PythonUtility(argv[1:])
+exit_code = application.run()
+exit(exit_code)

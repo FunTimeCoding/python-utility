@@ -1,8 +1,8 @@
-*.pyc
-*.egg-info
-.pyvenv
-.tox
 build
+.venv
+.tox
+python_utility.egg-info
+*.pyc
 
 # pytest
 .coverage

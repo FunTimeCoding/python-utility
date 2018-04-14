@@ -25,7 +25,7 @@ setup(
     ],
     keywords='development project skeleton',
     packages=['python_utility'],
-    install_requires=['pyyaml'],
+    install_requires=['pyyaml', 'gitpython'],
     python_requires='>=3.2',
     entry_points={
         'console_scripts': [

@@ -1,4 +1,6 @@
 from importlib.util import find_spec
+from sys import exit
+from sys import argv
 
 from python_utility.custom_argument_parser import CustomArgumentParser
 from python_utility.user_interface import UserInterface
@@ -9,6 +11,10 @@ class PythonUtility:
         parser = self.get_parser()
         parsed_arguments = parser.parse_args(arguments)
         self.parsed_arguments = parsed_arguments
+
+    @staticmethod
+    def main():
+        exit(PythonUtility(argv[1:]).run())
 
     def run(self) -> int:
         if self.curses_exists() is True:

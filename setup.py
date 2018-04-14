@@ -3,13 +3,34 @@ from setuptools import setup
 
 setup(
     name='python-utility',
-    version='0.1',
-    description='Stub description for python-utility.',
-    install_requires=['pyyaml'],
-    scripts=['bin/pu'],
-    packages=['python_utility'],
+    version='0.1.0',
+    description='Stub description.',
+    url='https://github.com/FunTimeCoding/python-utility',
     author='Alexander Reitzel',
     author_email='funtimecoding@gmail.com',
-    url='http://example.org',
-    download_url='http://example.org/python-utility.tar.gz'
+    license='MIT',
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Topic :: Software Development',
+    ],
+    keywords='development project skeleton',
+    packages=['python_utility'],
+    install_requires=['pyyaml'],
+    python_requires='>=3.2',
+    entry_points={
+        'console_scripts': [
+            'pu=python_utility.python_utility:'
+            'PythonUtility.main',
+        ],
+    },
 )

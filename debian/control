@@ -10,7 +10,7 @@ Vcs-Git: https://github.com/FunTimeCoding/python-utility.git
 
 Package: python3-python-utility
 Section: python
-Architecture: all
+Architecture: amd64
 Depends: ${python3:Depends}, ${misc:Depends}, python3-yaml, python3-git
 Description: stub short description
  Stub long description.

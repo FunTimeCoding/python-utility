@@ -3,9 +3,11 @@ tmp
 .vagrant
 
 # Python
+dist
 .coverage
 .cache
 .venv
 .tox
 *.egg-info
 *.pyc
+.pytest_cache

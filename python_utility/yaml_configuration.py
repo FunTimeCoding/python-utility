@@ -1,22 +1,22 @@
 from os.path import expanduser, isfile
+from typing import Dict, Iterator
+from yaml import safe_load_all, dump
 
-from yaml import load_all, dump
 
-
-class YamlConfig:
+class YamlConfiguration:
     def __init__(self, path: str = ''):
-        self.settings = {}
+        self.settings: Dict[str, str] = {}
         self.path = expanduser(path)
 
         if self.exists():
             input_file = open(self.path, 'r')
-            elements = load_all(input_file)
-
-            for dictionary in elements:
-                for key, value in dictionary.items():
-                    self.settings[key] = value
-
+            self.add_elements(safe_load_all(input_file))
             input_file.close()
+
+    def add_elements(self, elements: Iterator) -> None:
+        for dictionary in elements:
+            for key, value in dictionary.items():
+                self.settings[key] = value
 
     def exists(self) -> bool:
         result = False
@@ -37,11 +37,11 @@ class YamlConfig:
     def get(self, key: str) -> str:
         return self.settings.get(key, '')
 
-    def set(self, key: str, value: str):
+    def set(self, key: str, value: str) -> None:
         self.settings[key] = value
 
     def remove(self, key: str) -> str:
-        return self.settings.pop(key, None)
+        return self.settings.pop(key, '')
 
     def save(self) -> None:
         output_file = open(self.path, 'w')

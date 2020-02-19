@@ -5,21 +5,28 @@ from python_utility.yaml_configuration import YamlConfiguration
 
 
 def test_set_get_remove() -> None:
-    config = YamlConfiguration()
+    configuration = YamlConfiguration()
 
     # should be empty
-    assert config.contains('my-key') is False
-    assert config.get('my-key') == ''
+    assert configuration.contains('my-key') is False
+    assert configuration.get('my-key') == ''
 
     # should contain something
-    config.set('my-key', 'my-value')
-    assert config.contains('my-key') is True
-    assert config.get('my-key') == 'my-value'
+    configuration.set('my-key', 'my-value')
+    assert configuration.contains('my-key') is True
+    assert configuration.get('my-key') == 'my-value'
 
     # should remove something
-    config.remove('my-key')
-    assert config.contains('my-key') is False
-    assert config.get('my-key') == ''
+    configuration.remove('my-key')
+    assert configuration.contains('my-key') is False
+    assert configuration.get('my-key') == ''
+
+
+def test_get_nested() -> None:
+    configuration = YamlConfiguration('tests/fixture/nested.yaml')
+
+    assert configuration.contains('foo') is True
+    assert configuration.get('foo')['bar'] == 'baz'
 
 
 def test_save() -> None:
@@ -31,10 +38,10 @@ def test_save() -> None:
     assert isfile(file) is False
 
     # file should be created on save
-    config = YamlConfiguration(file)
+    configuration = YamlConfiguration(file)
     assert isfile(file) is False
-    config.save()
-    assert config.exists() is True
+    configuration.save()
+    assert configuration.exists() is True
     assert isfile(file) is True
 
     # file should be gone

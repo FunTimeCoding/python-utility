@@ -1,7 +1,8 @@
+venv
 pycache
+jinja
 pyyaml
 shyaml
-venv
 htmlcov
 pyenchant
 pygtk
@@ -10,6 +11,7 @@ contextlib
 asctime
 levelname
 pycodestyle
+gitpython
 
 # pytest
 pytest

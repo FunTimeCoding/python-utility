@@ -24,7 +24,7 @@ setup(
         'Topic :: Software Development',
     ],
     keywords='development project skeleton',
-    packages=['python_utility'],
+    packages=['python_utility', 'python_utility.powerline'],
     install_requires=['pyyaml', 'gitpython'],
     python_requires='>=3.2',
     entry_points={

@@ -7,3 +7,4 @@ pytest-cov # pytest coverage plugin
 mccabe # static analysis
 pyyaml # YAML parser
 gitpython # Git library
+powerline-status # shell prompt enhancement

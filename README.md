@@ -50,7 +50,7 @@ Configure Git on Windows before cloning:
 git config --global core.autocrlf input
 ```
 
-Install NFS plugin for Vagrant on Windows:
+Install NFS plug-in for Vagrant on Windows:
 
 ```bat
 vagrant plugin install vagrant-winnfsd
@@ -91,5 +91,5 @@ sudo dpkg --install build/python3-python-utility_0.1.0-1_all.deb
 Show files the package installed:
 
 ```sh
-dpkg-query --listfiles python-utility
+dpkg-query --listfiles python3-python-utility
 ```

@@ -3,7 +3,7 @@ from typing import Dict, Iterator, Union
 from yaml import safe_load_all, dump
 
 
-class YamlConfiguration:
+class Configuration:
     def __init__(self, path: str = ''):
         self.settings: Dict[str, str] = {}
         self.path = expanduser(path)

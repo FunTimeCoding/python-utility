@@ -1,11 +1,11 @@
 from os import remove
 from os.path import isfile
 
-from python_utility.yaml_configuration import YamlConfiguration
+from python_utility.configuration import Configuration
 
 
 def test_set_get_remove() -> None:
-    configuration = YamlConfiguration()
+    configuration = Configuration()
 
     # should be empty
     assert configuration.contains('my-key') is False
@@ -23,7 +23,7 @@ def test_set_get_remove() -> None:
 
 
 def test_get_nested() -> None:
-    configuration = YamlConfiguration('tests/fixture/nested.yaml')
+    configuration = Configuration('tests/fixture/nested.yaml')
 
     assert configuration.contains('foo') is True
     assert configuration.get('foo')['bar'] == 'baz'
@@ -38,7 +38,7 @@ def test_save() -> None:
     assert isfile(file) is False
 
     # file should be created on save
-    configuration = YamlConfiguration(file)
+    configuration = Configuration(file)
     assert isfile(file) is False
     configuration.save()
     assert configuration.exists() is True
@@ -58,12 +58,12 @@ def test_write_and_read():
     assert isfile(file) is False
 
     # file should be created
-    output_file = YamlConfiguration(file)
+    output_file = Configuration(file)
     output_file.set('my-key', 'my-value')
     output_file.save()
 
     # file should contain something
-    input_file = YamlConfiguration(file)
+    input_file = Configuration(file)
     assert input_file.get('my-key') == 'my-value'
 
     # file should be gone

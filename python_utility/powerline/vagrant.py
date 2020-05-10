@@ -29,7 +29,10 @@ class VagrantSegment(Segment):
         )
 
         if vagrant_directory_exists and vagrant_file_exists:
-            process = CommandProcess(['vagrant', 'status'], current_directory)
+            process = CommandProcess(
+                arguments=['vagrant', 'status'],
+                path=current_directory,
+            )
             output = 'unknown'
 
             for line in process.output.splitlines():

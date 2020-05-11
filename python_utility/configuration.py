@@ -1,9 +1,9 @@
 from os.path import expanduser, isfile
-from typing import Dict, Iterator
+from typing import Dict, Iterator, Union
 from yaml import safe_load_all, dump
 
 
-class YamlConfiguration:
+class Configuration:
     def __init__(self, path: str = ''):
         self.settings: Dict[str, str] = {}
         self.path = expanduser(path)
@@ -34,7 +34,7 @@ class YamlConfiguration:
 
         return result
 
-    def get(self, key: str) -> str:
+    def get(self, key: str) -> Union[str, Dict[str, str]]:
         return self.settings.get(key, '')
 
     def set(self, key: str, value: str) -> None:

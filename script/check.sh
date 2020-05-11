@@ -1,7 +1,10 @@
 #!/bin/sh -e
 
 DIRECTORY=$(dirname "${0}")
-SCRIPT_DIRECTORY=$(cd "${DIRECTORY}" || exit 1; pwd)
+SCRIPT_DIRECTORY=$(
+    cd "${DIRECTORY}" || exit 1
+    pwd
+)
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../configuration/project.sh"
 
@@ -37,7 +40,7 @@ DICTIONARY=en_US
 mkdir -p tmp
 
 if [ -d documentation/dictionary ]; then
-    cat documentation/dictionary/*.dic > tmp/combined.dic
+    cat documentation/dictionary/*.dic >tmp/combined.dic
 else
     touch tmp/combined.dic
 fi
@@ -93,12 +96,12 @@ if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
 
     for FILE in ${FILES}; do
         FILE_REPLACED=$(echo "${FILE}" | ${SED} 's/\//-/g')
-        shellcheck --format checkstyle "${FILE}" > "build/log/checkstyle-${FILE_REPLACED}.xml" || true
+        shellcheck --external-sources --format checkstyle "${FILE}" >"build/log/checkstyle-${FILE_REPLACED}.xml" || true
     done
 fi
 
 # shellcheck disable=SC2016
-SHELL_SCRIPT_CONCERNS=$(${FIND} . -regextype posix-extended -name '*.sh' -regex "${INCLUDE_FILTER}" -exec sh -c 'shellcheck ${1} || true' '_' '{}' \;)
+SHELL_SCRIPT_CONCERNS=$(${FIND} . -regextype posix-extended -name '*.sh' -regex "${INCLUDE_FILTER}" -exec sh -c 'shellcheck --external-sources ${1} || true' '_' '{}' \;)
 
 if [ ! "${SHELL_SCRIPT_CONCERNS}" = '' ]; then
     CONCERN_FOUND=true
@@ -146,7 +149,7 @@ if [ ! "${SHELLCHECK_DISABLES}" = '' ]; then
     echo "${SHELLCHECK_DISABLES}"
 fi
 
-PYCODESTYLE_CONCERNS=$(pycodestyle --exclude=.git,.tox,.venv,__pycache__ --statistics .) || true
+PYCODESTYLE_CONCERNS=$(pycodestyle --exclude=.git,.tox,.venv,__pycache__ --statistics . 2>&1) || true
 
 if [ ! "${PYCODESTYLE_CONCERNS}" = '' ]; then
     CONCERN_FOUND=true
@@ -157,7 +160,7 @@ if [ ! "${PYCODESTYLE_CONCERNS}" = '' ]; then
 fi
 
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-    echo "${PYCODESTYLE_CONCERNS}" > build/log/pycodestyle.txt
+    echo "${PYCODESTYLE_CONCERNS}" >build/log/pycodestyle.txt
 fi
 
 PYTHON_FILES=$(${FIND} . -regextype posix-extended -type f -name '*.py' -regex "${INCLUDE_FILTER}" ! -regex "${INCLUDE_STILL_FILTER}")
@@ -169,11 +172,31 @@ echo "[NOTICE] Pylint report:"
 echo "${PYLINT_OUTPUT}"
 
 if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
-    echo "${PYLINT_OUTPUT}" > build/log/pylint.txt
+    echo "${PYLINT_OUTPUT}" >build/log/pylint.txt
 fi
 
 if [ ! "${RETURN_CODE}" = 0 ]; then
+    echo
     echo "Pylint return code: ${RETURN_CODE}"
+fi
+
+RETURN_CODE=0
+MYPY_OUTPUT=$(mypy --ignore-missing-imports .) || RETURN_CODE=$?
+
+if [ "${CONTINUOUS_INTEGRATION_MODE}" = true ]; then
+    echo "${MYPY_OUTPUT}" >build/log/mypy.txt
+fi
+
+if [ ! "${RETURN_CODE}" = 0 ]; then
+    if [ ! "${MYPY_OUTPUT}" = '' ]; then
+        CONCERN_FOUND=true
+        echo
+        echo "[WARNING] Mypy concerns:"
+        echo
+        echo "${MYPY_OUTPUT}"
+        echo
+        echo "Mypy return code: ${RETURN_CODE}"
+    fi
 fi
 
 if [ "${CONCERN_FOUND}" = true ]; then

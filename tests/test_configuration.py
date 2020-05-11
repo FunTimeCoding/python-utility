@@ -1,25 +1,32 @@
 from os import remove
 from os.path import isfile
 
-from python_utility.yaml_configuration import YamlConfiguration
+from python_utility.configuration import Configuration
 
 
 def test_set_get_remove() -> None:
-    config = YamlConfiguration()
+    configuration = Configuration()
 
     # should be empty
-    assert config.contains('my-key') is False
-    assert config.get('my-key') == ''
+    assert configuration.contains('my-key') is False
+    assert configuration.get('my-key') == ''
 
     # should contain something
-    config.set('my-key', 'my-value')
-    assert config.contains('my-key') is True
-    assert config.get('my-key') == 'my-value'
+    configuration.set('my-key', 'my-value')
+    assert configuration.contains('my-key') is True
+    assert configuration.get('my-key') == 'my-value'
 
     # should remove something
-    config.remove('my-key')
-    assert config.contains('my-key') is False
-    assert config.get('my-key') == ''
+    configuration.remove('my-key')
+    assert configuration.contains('my-key') is False
+    assert configuration.get('my-key') == ''
+
+
+def test_get_nested() -> None:
+    configuration = Configuration('tests/fixture/nested.yaml')
+
+    assert configuration.contains('foo') is True
+    assert configuration.get('foo')['bar'] == 'baz'
 
 
 def test_save() -> None:
@@ -31,10 +38,10 @@ def test_save() -> None:
     assert isfile(file) is False
 
     # file should be created on save
-    config = YamlConfiguration(file)
+    configuration = Configuration(file)
     assert isfile(file) is False
-    config.save()
-    assert config.exists() is True
+    configuration.save()
+    assert configuration.exists() is True
     assert isfile(file) is True
 
     # file should be gone
@@ -51,12 +58,12 @@ def test_write_and_read():
     assert isfile(file) is False
 
     # file should be created
-    output_file = YamlConfiguration(file)
+    output_file = Configuration(file)
     output_file.set('my-key', 'my-value')
     output_file.save()
 
     # file should contain something
-    input_file = YamlConfiguration(file)
+    input_file = Configuration(file)
     assert input_file.get('my-key') == 'my-value'
 
     # file should be gone

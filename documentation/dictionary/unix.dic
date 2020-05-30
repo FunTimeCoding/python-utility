@@ -15,4 +15,8 @@ hunspell
 wget
 myspell
 NFS
-powerline
+slappasswd
+shellspec
+kcov
+regextype
+Solaris

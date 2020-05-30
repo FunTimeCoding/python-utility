@@ -41,7 +41,12 @@ class CommandFailed(RuntimeError):
 
 
 class CommandProcess:
-    def __init__(self, arguments: list, path: str = None, sudo_user: str = '') -> None:
+    def __init__(
+            self,
+            arguments: list,
+            path: str = None,
+            sudo_user: str = ''
+    ) -> None:
         if sudo_user != '':
             arguments = ['sudo', '-u', sudo_user] + arguments
 

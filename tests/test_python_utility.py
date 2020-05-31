@@ -1,13 +1,13 @@
 from sys import modules
 
+import pytest
+
 from python_utility.python_utility import PythonUtility
 
 
 def test_return_code(capfd):
-    try:
+    with pytest.raises(SystemExit):
         PythonUtility(['--help'])
-    except SystemExit:
-        pass
 
     standard_output, standard_error = capfd.readouterr()
     assert 'Example' in standard_output.strip()

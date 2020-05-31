@@ -26,16 +26,20 @@ def test_get_nested() -> None:
     configuration = Configuration('tests/fixture/nested.yaml')
 
     assert configuration.contains('foo') is True
-    assert configuration.get('foo')['bar'] == 'baz'
+    nested_result = configuration.get_nested('foo')
+    assert isinstance(nested_result, dict)
+    assert nested_result.get('bar') == 'baz'
+
+
+def ensure_file_does_not_exist(file: str):
+    if isfile(file):
+        remove(file)
+    assert isfile(file) is False
 
 
 def test_save() -> None:
     file = '/tmp/example.yml'
-
-    # file should not exist
-    if isfile(file):
-        remove(file)
-    assert isfile(file) is False
+    ensure_file_does_not_exist(file)
 
     # file should be created on save
     configuration = Configuration(file)
@@ -51,11 +55,7 @@ def test_save() -> None:
 
 def test_write_and_read():
     file = '/tmp/example.yml'
-
-    # file should not exist
-    if isfile(file):
-        remove(file)
-    assert isfile(file) is False
+    ensure_file_does_not_exist(file)
 
     # file should be created
     output_file = Configuration(file)

@@ -1,9 +1,9 @@
 from argparse import ArgumentParser
-from sys import exit, stderr
+from sys import exit as system_exit, stderr
 
 
 class CustomArgumentParser(ArgumentParser):
-    def error(self, message) -> None:
+    def error(self, message):
         stderr.write('Error: %s\n' % message)
 
-        exit(1)
+        system_exit(1)

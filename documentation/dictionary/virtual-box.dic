@@ -3,3 +3,4 @@ virtualbox
 cpus
 modifyvm
 vram
+poweroff

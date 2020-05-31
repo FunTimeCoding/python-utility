@@ -34,8 +34,19 @@ class Configuration:
 
         return result
 
-    def get(self, key: str) -> Union[str, Dict[str, str]]:
+    def get(self, key: str) -> str:
         return self.settings.get(key, '')
+
+    def get_nested(self, key: str) -> dict:
+        get_result: Union[str, Dict[str, str]] = self.settings.get(key, {})
+        result: Dict[str, str]
+
+        if isinstance(get_result, dict):
+            result = get_result
+        else:
+            result = {}
+
+        return result
 
     def set(self, key: str, value: str) -> None:
         self.settings[key] = value

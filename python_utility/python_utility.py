@@ -1,6 +1,6 @@
 from importlib.util import find_spec
-from sys import exit
-from sys import argv
+from sys import argv as argument_vector, exit as system_exit
+import curses
 
 from python_utility.custom_argument_parser import CustomArgumentParser
 from python_utility.user_interface import UserInterface
@@ -14,21 +14,16 @@ class PythonUtility:
 
     @staticmethod
     def main():
-        exit(PythonUtility(argv[1:]).run())
+        system_exit(PythonUtility(argument_vector[1:]).run())
 
     def run(self) -> int:
         if self.curses_exists() is True:
-            from curses import wrapper
-
             def main(standard_screen) -> int:
-                interface = UserInterface(
-                    self.parsed_arguments,
-                    standard_screen
-                )
+                interface = UserInterface(screen=standard_screen)
 
                 return interface.run()
 
-            return_code = wrapper(main)
+            return_code = curses.wrapper(main)
         else:
             return_code = 1
             print('Curses library not found.')

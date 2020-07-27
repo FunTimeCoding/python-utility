@@ -10,3 +10,7 @@ mypy # type checker
 pyyaml # YAML parser
 gitpython # Git library
 powerline-status # shell prompt enhancement
+typer # command line interface library
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib

@@ -15,3 +15,5 @@
 /.mypy_cache
 *.egg-info
 *.pyc
+/token.pickle
+/credentials.json

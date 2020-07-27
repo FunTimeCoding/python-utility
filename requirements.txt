@@ -10,3 +10,4 @@ mypy # type checker
 pyyaml # YAML parser
 gitpython # Git library
 powerline-status # shell prompt enhancement
+typer # command line interface library

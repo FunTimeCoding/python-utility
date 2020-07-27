@@ -1,6 +1,10 @@
 #!/bin/sh -e
 
-. "${HOME}/venv/bin/activate"
+if [ ! "${VIRTUAL_ENV}" = '' ]; then
+    # shellcheck source=/dev/null
+    . "${HOME}/venv/bin/activate"
+fi
+
 PACKAGES=$(pip list --outdated --format json | jq --raw-output .[].name)
 
 if [ "${PACKAGES}" = '' ]; then

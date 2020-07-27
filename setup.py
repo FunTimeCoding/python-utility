@@ -35,6 +35,8 @@ setup(
         'console_scripts': [
             'pu=python_utility.python_utility:'
             'PythonUtility.main',
+            'gsp=python_utility.spreadsheet:'
+            'Spreadsheet.main',
         ],
     },
 )

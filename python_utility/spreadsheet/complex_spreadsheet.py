@@ -1,8 +1,5 @@
-from __future__ import print_function
-
 import pickle
 import os.path
-import typer
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -12,20 +9,13 @@ from python_utility.configuration import Configuration
 TOKEN_FILE = 'token.pickle'
 
 
-class Spreadsheet:
-    @staticmethod
-    def main():
-        typer.run(Spreadsheet.edit)
-
-    @staticmethod
-    def hello():
-        typer.echo('Hello friend.')
-
-    @staticmethod
-    def edit():
+class ComplexSpreadsheet:
+    def __init__(self):
         configuration = Configuration('~/.python-utility.yaml')
-        identifier = configuration.get('spreadsheet')
+        self.identifier = configuration.get('spreadsheet')
 
+    @staticmethod
+    def load_spreadsheet():
         credentials = None
 
         if os.path.exists(TOKEN_FILE):
@@ -48,34 +38,28 @@ class Spreadsheet:
 
         service = build('sheets', 'v4', credentials=credentials)
 
-        sheet = service.spreadsheets()
+        return service.spreadsheets()
 
-        # Spreadsheet.update(sheet, identifier)
-        Spreadsheet.read(sheet, identifier)
+    def read(self, sheet, spreadsheet_range):
+        result = sheet.values().get(
+            spreadsheetId=self.identifier,
+            range=spreadsheet_range
+        ).execute()
+
+        return result.get('values', [])
+
+    def update(self, sheet, spreadsheet_range, values):
+        sheet.values().update(
+            spreadsheetId=self.identifier,
+            valueInputOption='USER_ENTERED',
+            body={'values': values},
+            range=spreadsheet_range
+        ).execute()
 
     @staticmethod
-    def update(sheet, identifier):
-        result = sheet.values().get(
-            spreadsheetId=identifier,
-            range='A1:B2'
-        ).execute()
-        values = result.get('values', [])
-
-        if not values:
+    def print_rows(rows):
+        if not rows:
             print('No data found.')
         else:
-            for row in values:
-                print('%s, %s' % (row[0], row[1]))
-
-    @staticmethod
-    def read(sheet, identifier):
-        sheet.values().update(
-            spreadsheetId=identifier,
-            valueInputOption='USER_ENTERED',
-            body={
-                'values': [
-                    ['foo'],
-                ]
-            },
-            range='A1'
-        ).execute()
+            for row in rows:
+                print(','.join(row))

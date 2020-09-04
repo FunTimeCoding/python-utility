@@ -7,6 +7,7 @@ pytest-cov # pytest coverage plugin
 mccabe # static analysis
 py-spy # sampling profiler
 mypy # type checker
+snakeviz # graphical user interface for profiler output
 pyyaml # YAML parser
 gitpython # Git library
 powerline-status # shell prompt enhancement

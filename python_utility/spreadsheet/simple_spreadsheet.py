@@ -15,3 +15,6 @@ class SimpleSpreadsheet:
 
     def search(self, value):
         return self.worksheet.find(value)
+
+    def edit_coordinates(self, row, column, value):
+        self.worksheet.update_cell(row, column, value)

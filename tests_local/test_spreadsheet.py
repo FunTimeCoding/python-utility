@@ -32,7 +32,7 @@ def disabled_test_complex_spreadsheet() -> None:
 
 
 def test_simple_spreadsheet() -> None:
-    spreadsheet = SimpleSpreadsheet('API test')
+    spreadsheet = SimpleSpreadsheet()
 
     # restore default
     spreadsheet.edit('A1', [['a1', 'b1'], ['a2', 'b2']])

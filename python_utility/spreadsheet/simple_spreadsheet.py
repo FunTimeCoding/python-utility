@@ -1,10 +1,12 @@
 import gspread
+from python_utility.configuration import Configuration
 
 
 class SimpleSpreadsheet:
-    def __init__(self, name: str):
+    def __init__(self):
+        configuration = Configuration('~/.python-utility.yaml')
         connection = gspread.service_account()
-        spreadsheet = connection.open(name)
+        spreadsheet = connection.open_by_key(configuration.get('spreadsheet'))
         self.worksheet = spreadsheet.get_worksheet(0)
 
     def read(self, spreadsheet_range):

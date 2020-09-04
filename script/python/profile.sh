@@ -7,4 +7,6 @@ SCRIPT_DIRECTORY=$(
 )
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
-"${HOME}/src/continuous-integration-tools/bin/jenkins/get-job.sh" "${PROJECT_NAME_DASH}" configuration/job.xml
+ENTRYPOINT=$(command -v "${PROJECT_NAME_INITIALS}")
+python -m cProfile -o tmp/profile.prof "${ENTRYPOINT}"
+snakeviz tmp/profile.prof

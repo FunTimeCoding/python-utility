@@ -16,3 +16,4 @@ google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
 gspread # simplified library around Google spreadsheets
+cherrypy # web server library

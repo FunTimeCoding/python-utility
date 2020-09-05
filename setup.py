@@ -28,6 +28,7 @@ setup(
         'python_utility',
         'python_utility.language_example',
         'python_utility.powerline',
+        'python_utility.spreadsheet',
     ],
     install_requires=['pyyaml', 'gitpython'],
     python_requires='>=3.2',
@@ -35,8 +36,8 @@ setup(
         'console_scripts': [
             'pu=python_utility.python_utility:'
             'PythonUtility.main',
-            'gsp=python_utility.spreadsheet_command:'
-            'SpreadsheetCommand.main',
+            'spreadsheet-service=python_utility.spreadsheet'
+            '.spreadsheet_web_server:SpreadsheetWebServer.main',
         ],
     },
 )

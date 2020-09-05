@@ -1,3 +1,6 @@
+import pytest
+from gspread import CellNotFound
+
 from python_utility.spreadsheet.complex_spreadsheet import ComplexSpreadsheet
 from python_utility.spreadsheet.simple_spreadsheet import SimpleSpreadsheet
 
@@ -53,3 +56,7 @@ def test_simple_spreadsheet() -> None:
     spreadsheet.edit_coordinates(cell.row, cell.col + 1, 'bar')
     result = spreadsheet.read('B1')
     assert result == [['bar']]
+
+    # search for a value that does not exist
+    with pytest.raises(CellNotFound):
+        spreadsheet.search('baz')

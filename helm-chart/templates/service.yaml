@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # This used to be python-utility-service to be better distinguishable, but a suffix of the kind that it is seems redundant. It also determines the cluster domain.
+  name: python-utility
+spec:
+  selector:
+    app: python-utility-label
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

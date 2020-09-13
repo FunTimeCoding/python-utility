@@ -7,11 +7,17 @@ SCRIPT_DIRECTORY=$(
 )
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
+docker build --tag "${PROJECT_NAME_DASH}-snapshot" .
 
-docker images | grep --quiet "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}" && FOUND=true || FOUND=false
+GIT_TAG=$(git describe --exact-match --tags HEAD 2>/dev/null || echo '')
 
-if [ "${FOUND}" = true ]; then
-    docker rmi "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}"
+if [ ! "${GIT_TAG}" = '' ]; then
+    script/docker/publish.sh "${GIT_TAG}"
+    script/kubernetes/deploy.sh "${GIT_TAG}"
 fi
 
-docker build --tag "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}" .
+# Save space on CI.
+# TODO: Confirm this does not slow down builds too much.
+if [ "${1}" = --ci-mode ]; then
+    docker rmi "${PROJECT_NAME_DASH}-snapshot"
+fi

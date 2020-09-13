@@ -1,0 +1,6 @@
+apiVersion: v2
+name: python-utility
+description: python-utility microservice
+type: application
+appVersion: 0.0.1
+version: 0.0.1

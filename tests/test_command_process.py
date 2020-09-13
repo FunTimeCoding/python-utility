@@ -18,10 +18,10 @@ def test_command_process(capfd) -> None:
 
 def test_command_fails() -> None:
     with pytest.raises(CommandFailed) as exception:
-        CommandProcess(arguments=['ls', 'does-not-exist'])
+        CommandProcess(arguments=['tests/fixture/command-fails.sh'])
 
-    assert 'CommandFailed: ls does-not-exist' in str(exception.value)
-    assert 'ls does-not-exist' == exception.value.get_command()
-    assert exception.value.get_return_code() == 2
-    assert exception.value.get_standard_output() == ''
-    assert exception.value.get_standard_error() != ''
+    assert 'test stdout' in str(exception.value)
+    assert 'tests/fixture/command-fails.sh' == exception.value.get_command()
+    assert exception.value.get_return_code() == 1
+    assert exception.value.get_standard_output() == 'test stdout'
+    assert exception.value.get_standard_error() == 'test stderr'

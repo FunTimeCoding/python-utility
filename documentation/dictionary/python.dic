@@ -25,6 +25,7 @@ aiohttp
 windll
 pysqlite
 typer
+tempfile
 
 # pytest
 pytest

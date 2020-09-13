@@ -7,6 +7,10 @@ from python_utility.command_process import CommandFailed
 from python_utility.powerline.vagrant import VagrantSegment
 
 TEMPORARY_DIRECTORY = '/tmp/python_utility'
+# TODO: The vagrant subprocess cannot access the temporary directory. What is
+#  a better practice? The insecure directory above accepted on SonarQube for
+#  now.
+# TEMPORARY_DIRECTORY = tempfile.TemporaryDirectory(dir='/tmp').name
 
 
 def test_create_test_directory() -> None:

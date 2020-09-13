@@ -5,7 +5,6 @@ from python_utility.command_process import CommandProcess, CommandFailed
 
 def test_prints_output(capfd) -> None:
     process = CommandProcess(arguments=['tests/fixture/prints-output.sh'])
-
     assert process.get_return_code() == 0
     assert process.get_standard_output() == 'test stdout'
     assert process.get_standard_error() == 'test stderr'
@@ -16,10 +15,15 @@ def test_prints_output(capfd) -> None:
     assert standard_error == 'test stderr\n'
 
 
-def test_prints_no_output() -> None:
+def test_prints_no_output(capfd) -> None:
     process = CommandProcess(arguments=['tests/fixture/prints-no-output.sh'])
     assert process.get_standard_output() == ''
     assert process.get_standard_error() == ''
+
+    process.print_output()
+    standard_output, standard_error = capfd.readouterr()
+    assert standard_output == '\n'
+    assert standard_error == '\n'
 
 
 def test_command_fails_with_output() -> None:

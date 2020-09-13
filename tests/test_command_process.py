@@ -3,17 +3,23 @@ import pytest
 from python_utility.command_process import CommandProcess, CommandFailed
 
 
-def test_command_process(capfd) -> None:
-    process = CommandProcess(arguments=['echo', 'hello'])
+def test_prints_output(capfd) -> None:
+    process = CommandProcess(arguments=['tests/fixture/prints-output.sh'])
 
     assert process.get_return_code() == 0
-    assert process.get_standard_output() == 'hello'
-    assert process.get_standard_error() == ''
+    assert process.get_standard_output() == 'test stdout'
+    assert process.get_standard_error() == 'test stderr'
 
     process.print_output()
     standard_output, standard_error = capfd.readouterr()
-    assert standard_output == 'hello\n'
-    assert standard_error == ''
+    assert standard_output == 'test stdout\n'
+    assert standard_error == 'test stderr\n'
+
+
+def test_prints_no_output() -> None:
+    process = CommandProcess(arguments=['tests/fixture/prints-no-output.sh'])
+    assert process.get_standard_output() == ''
+    assert process.get_standard_error() == ''
 
 
 def test_command_fails_with_output() -> None:

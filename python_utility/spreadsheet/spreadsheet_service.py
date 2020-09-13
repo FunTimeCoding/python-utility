@@ -5,6 +5,17 @@ from python_utility.spreadsheet.simple_spreadsheet import SimpleSpreadsheet
 
 
 class SpreadsheetService:
+    @staticmethod
+    def read_status() -> str:
+        try:
+            from python_utility.build import Build
+        except ImportError:
+            from python_utility.build_undefined import Build
+
+        return 'Version: ' + Build.GIT_TAG + '\n' \
+               + 'Git hash: ' + Build.GIT_HASH + '\n' \
+               + 'Build date: ' + Build.BUILD_DATE + '\n'
+
     @cherrypy.expose
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
@@ -39,11 +50,4 @@ class SpreadsheetService:
 
     @cherrypy.expose
     def status(self):
-        try:
-            from python_utility.build import Build
-        except ImportError:
-            from python_utility.build_undefined import Build
-
-        return 'Version: ' + Build.GIT_TAG + '\n' \
-               + 'Git hash: ' + Build.GIT_HASH + '\n' \
-               + 'Build date: ' + Build.BUILD_DATE + '\n'
+        return SpreadsheetService.read_status()

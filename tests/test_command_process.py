@@ -11,8 +11,8 @@ def test_prints_output(capfd) -> None:
 
     process.print_output()
     standard_output, standard_error = capfd.readouterr()
-    assert standard_output == 'test stdout\n'
-    assert standard_error == 'test stderr\n'
+    assert standard_output == 'test stderr\ntest stdout\n'
+    assert standard_error == ''
 
 
 def test_prints_no_output(capfd) -> None:
@@ -22,8 +22,8 @@ def test_prints_no_output(capfd) -> None:
 
     process.print_output()
     standard_output, standard_error = capfd.readouterr()
-    assert standard_output == '\n'
-    assert standard_error == '\n'
+    assert standard_output == ''
+    assert standard_error == ''
 
 
 def test_command_fails_with_output() -> None:

@@ -22,6 +22,7 @@ class SpreadsheetService:
             replace = request['replace']
             x_offset = request['x-offset']
             spreadsheet = SimpleSpreadsheet()
+            spreadsheet.connect()
 
             try:
                 cell = spreadsheet.search(search)

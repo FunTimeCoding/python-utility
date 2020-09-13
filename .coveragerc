@@ -1,6 +1,7 @@
 [run]
 branch = True
 omit = tests/*
+       tests_local/*
        */__init__.py
        setup.py
 [html]

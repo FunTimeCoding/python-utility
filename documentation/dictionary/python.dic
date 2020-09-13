@@ -34,6 +34,8 @@ xunit
 addopts
 junitxml
 coveragerc
+lf
+capfd
 
 # pylint
 pylint

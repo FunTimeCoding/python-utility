@@ -60,3 +60,11 @@ def test_command_not_found() -> None:
            'File not found: does-not-exist'
     assert exception.value.get_standard_error() == \
            'No such file or directory: \'does-not-exist\''
+
+
+def test_sudo() -> None:
+    process = CommandProcess(
+        arguments=['tests/fixture/prints-no-output.sh'],
+        sudo_user='root'
+    )
+    assert process.get_return_code() == 0

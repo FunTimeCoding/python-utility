@@ -37,3 +37,16 @@ def test_command_fails_without_output() -> None:
     assert exception.value.get_return_code() == 1
     assert exception.value.get_standard_output() == ''
     assert exception.value.get_standard_error() == ''
+
+
+def test_command_not_found() -> None:
+    with pytest.raises(CommandFailed) as exception:
+        CommandProcess(arguments=['does-not-exist'])
+
+    assert 'File not found: does-not-exist' in str(exception.value)
+    assert exception.value.get_command() == 'does-not-exist'
+    assert exception.value.get_return_code() == -1
+    assert exception.value.get_standard_output() == \
+           'File not found: does-not-exist'
+    assert exception.value.get_standard_error() == \
+           'No such file or directory: \'does-not-exist\''

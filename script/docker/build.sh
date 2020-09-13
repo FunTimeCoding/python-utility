@@ -7,8 +7,8 @@ SCRIPT_DIRECTORY=$(
 )
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
+script/python/create-build-information.sh
 docker build --tag "${PROJECT_NAME_DASH}-snapshot" .
-
 GIT_TAG=$(git describe --exact-match --tags HEAD 2>/dev/null || echo '')
 
 if [ ! "${GIT_TAG}" = '' ]; then

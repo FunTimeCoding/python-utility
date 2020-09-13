@@ -35,3 +35,14 @@ class SpreadsheetService:
                 response = 'Not found: ' + str(e)
 
         return response
+
+    @cherrypy.expose
+    def status(self):
+        try:
+            from python_utility.build import Build
+        except ImportError:
+            from python_utility.build_undefined import Build
+
+        return 'Version: ' + Build.GIT_TAG + '\n' \
+               + 'Git hash: ' + Build.GIT_HASH + '\n' \
+               + 'Build date: ' + Build.BUILD_DATE + '\n'

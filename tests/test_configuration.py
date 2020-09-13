@@ -29,6 +29,8 @@ def test_get_nested() -> None:
     nested_result = configuration.get_nested('foo')
     assert isinstance(nested_result, dict)
     assert nested_result.get('bar') == 'baz'
+    nested_result_without_dictionary = configuration.get_nested('foo_no_dict')
+    assert isinstance(nested_result_without_dictionary, dict)
 
 
 def ensure_file_does_not_exist(file: str):

@@ -7,6 +7,8 @@ from python_utility.command_process import CommandFailed
 from python_utility.powerline.vagrant import VagrantSegment
 
 TEMPORARY_DIRECTORY = '/tmp/python_utility'
+
+
 # TODO: The vagrant subprocess cannot access the temporary directory. What is
 #  a better practice? The insecure directory above accepted on SonarQube for
 #  now.
@@ -21,6 +23,19 @@ def test_create_test_directory() -> None:
 def test_vagrant_file_exists() -> None:
     assert VagrantSegment.vagrant_file_exists(getcwd())
     assert not VagrantSegment.vagrant_file_exists(TEMPORARY_DIRECTORY)
+
+
+def test_callable() -> None:
+    segment = VagrantSegment()
+    power_line = None
+    segment_info = {
+        'shortened_path': TEMPORARY_DIRECTORY
+    }
+    create_watcher = None
+    assert segment(power_line, segment_info, create_watcher) == [{
+        'contents': '.vagrant directory not found',
+        'highlight_groups': ['information:regular'],
+    }]
 
 
 def test_vagrant_directory_exists() -> None:

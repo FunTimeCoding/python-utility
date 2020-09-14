@@ -28,3 +28,11 @@ class SpreadsheetWebTest(helper.CPWebCase):
         self.getPage("/spreadsheet", method='POST', headers=headers, body=body)
         self.assertBody('"replace missing"')
         self.assertStatus('200 OK')
+
+    def test_spreadsheet_x_offset_missing(self):
+        body = '{"search": "foo", "replace": "bar"}'
+        headers = [('Content-Type', 'application/json'),
+                   ('Content-Length', str(len(body)))]
+        self.getPage("/spreadsheet", method='POST', headers=headers, body=body)
+        self.assertBody('"x-offset missing"')
+        self.assertStatus('200 OK')

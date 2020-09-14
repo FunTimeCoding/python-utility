@@ -1,5 +1,6 @@
 import pickle
-import os.path
+from os.path import exists
+
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -15,12 +16,18 @@ class ComplexSpreadsheet:
         self.identifier = configuration.get('spreadsheet')
 
     @staticmethod
-    def load_spreadsheet():
+    def load_token_file():
         credentials = None
 
-        if os.path.exists(TOKEN_FILE):
+        if exists(TOKEN_FILE):
             with open(TOKEN_FILE, 'rb') as token:
                 credentials = pickle.load(token)
+
+        return credentials
+
+    @staticmethod
+    def load_spreadsheet():
+        credentials = ComplexSpreadsheet.load_token_file()
 
         if not credentials or not credentials.valid:
             if credentials \

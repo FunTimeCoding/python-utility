@@ -5,6 +5,10 @@ def test_complex_spreadsheet() -> None:
     assert ComplexSpreadsheet().identifier != ''
 
 
+def test_load_token_file() -> None:
+    assert ComplexSpreadsheet.load_token_file() != ''
+
+
 def test_print_rows(capfd) -> None:
     ComplexSpreadsheet.print_rows([['a1', 'a2'], ['b1', 'b2']])
     standard_output, standard_error = capfd.readouterr()

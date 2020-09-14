@@ -1,5 +1,10 @@
+from os import mkdir
+from os.path import exists, join
+from shutil import rmtree
+
 from python_utility.spreadsheet.complex_spreadsheet import ComplexSpreadsheet, \
     TOKEN_FILE
+from tests.constants import TEMPORARY_DIRECTORY
 
 
 def test_complex_spreadsheet() -> None:
@@ -12,6 +17,24 @@ def test_load_token_file() -> None:
 
 def test_load_missing_token_file() -> None:
     assert not ComplexSpreadsheet.load_token_file('does-not-exist')
+
+
+def test_save_token_file() -> None:
+    if exists(TEMPORARY_DIRECTORY):
+        rmtree(TEMPORARY_DIRECTORY)
+
+    mkdir(TEMPORARY_DIRECTORY)
+    assert exists(TEMPORARY_DIRECTORY)
+
+    pickle_path = join(TEMPORARY_DIRECTORY, 'test.pickle')
+    ComplexSpreadsheet.save_token_file(
+        pickle_path,
+        {'hello'}
+    )
+    assert exists(pickle_path)
+    assert ComplexSpreadsheet.load_token_file(pickle_path) == {'hello'}
+
+    rmtree(TEMPORARY_DIRECTORY)
 
 
 def test_print_rows(capfd) -> None:

@@ -1,13 +1,10 @@
-from os import mkdir, rmdir, getcwd, remove
+from os import mkdir, rmdir, getcwd
 from os.path import join, exists
 from shutil import rmtree
 
-import pytest
-
-from python_utility.command_process import CommandFailed
 from python_utility.powerline.vagrant import VagrantSegment
 
-TEMPORARY_DIRECTORY = '/tmp/python_utility'
+from tests.constants import TEMPORARY_DIRECTORY
 
 
 # TODO: The vagrant subprocess cannot access the temporary directory. What is

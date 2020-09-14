@@ -1,4 +1,5 @@
-from python_utility.spreadsheet.complex_spreadsheet import ComplexSpreadsheet
+from python_utility.spreadsheet.complex_spreadsheet import ComplexSpreadsheet, \
+    TOKEN_FILE
 
 
 def test_complex_spreadsheet() -> None:
@@ -6,7 +7,11 @@ def test_complex_spreadsheet() -> None:
 
 
 def test_load_token_file() -> None:
-    assert ComplexSpreadsheet.load_token_file() != ''
+    assert ComplexSpreadsheet.load_token_file(TOKEN_FILE) != ''
+
+
+def test_load_missing_token_file() -> None:
+    assert not ComplexSpreadsheet.load_token_file('does-not-exist')
 
 
 def test_print_rows(capfd) -> None:

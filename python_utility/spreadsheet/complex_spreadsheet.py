@@ -16,18 +16,23 @@ class ComplexSpreadsheet:
         self.identifier = configuration.get('spreadsheet')
 
     @staticmethod
-    def load_token_file():
+    def load_token_file(path: str):
         credentials = None
 
-        if exists(TOKEN_FILE):
-            with open(TOKEN_FILE, 'rb') as token:
+        if exists(path):
+            with open(path, 'rb') as token:
                 credentials = pickle.load(token)
 
         return credentials
 
     @staticmethod
+    def save_token_file(path: str, credentials):
+        with open(path, 'wb') as token:
+            pickle.dump(credentials, token)
+
+    @staticmethod
     def load_spreadsheet():
-        credentials = ComplexSpreadsheet.load_token_file()
+        credentials = ComplexSpreadsheet.load_token_file(TOKEN_FILE)
 
         if not credentials or not credentials.valid:
             if credentials \
@@ -40,8 +45,8 @@ class ComplexSpreadsheet:
                     ['https://www.googleapis.com/auth/spreadsheets']
                 )
                 credentials = flow.run_local_server(port=0)
-            with open(TOKEN_FILE, 'wb') as token:
-                pickle.dump(credentials, token)
+
+            ComplexSpreadsheet.save_token_file(TOKEN_FILE, credentials)
 
         service = build('sheets', 'v4', credentials=credentials)
 

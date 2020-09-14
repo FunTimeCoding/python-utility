@@ -30,8 +30,7 @@ def test_vagrant_file_exists() -> None:
 
 
 def test_vagrant_status_raises_on_empty_directory() -> None:
-    with pytest.raises(CommandFailed):
-        VagrantSegment.vagrant_status(TEMPORARY_DIRECTORY)
+    assert VagrantSegment.vagrant_status(TEMPORARY_DIRECTORY) == 'unknown'
 
 
 def test_callable_no_vagrant_directory() -> None:

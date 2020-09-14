@@ -17,7 +17,9 @@ TEMPORARY_DIRECTORY = '/tmp/python_utility'
 
 
 def test_create_test_directory() -> None:
-    rmtree(TEMPORARY_DIRECTORY)
+    if exists(TEMPORARY_DIRECTORY):
+        rmtree(TEMPORARY_DIRECTORY)
+
     mkdir(TEMPORARY_DIRECTORY)
     assert exists(TEMPORARY_DIRECTORY)
 

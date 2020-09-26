@@ -35,7 +35,7 @@ else
     REGISTRY_SERVER="${PRIVATE_REGISTRY_PASSWORD}"
 fi
 
-helm list --short | grep --quiet "${PROJECT_NAME_DASH}" && IS_INSTALLED=true || IS_INSTALLED=false
+docker run --rm --volume "${PWD}/helm-chart:/helm-chart" --volume "${HOME}/.kube:/root/.kube" dtzar/helm-kubectl helm list --short | grep --quiet "${PROJECT_NAME_DASH}" && IS_INSTALLED=true || IS_INSTALLED=false
 
 if [ "${IS_INSTALLED}" = 'true' ]; then
     HELM_COMMAND='upgrade'

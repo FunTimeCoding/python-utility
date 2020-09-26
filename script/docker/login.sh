@@ -2,4 +2,4 @@
 
 # shellcheck source=/dev/null
 . "${HOME}/.virtualization-tools.sh"
-docker login --username "${PRIVATE_REGISTRY_USERNAME}" --password "${PRIVATE_REGISTRY_PASSWORD}" "${PRIVATE_REGISTRY_SERVER}"
+echo "${PRIVATE_REGISTRY_PASSWORD}" | docker login --username "${PRIVATE_REGISTRY_USERNAME}" --password-stdin "${PRIVATE_REGISTRY_SERVER}"

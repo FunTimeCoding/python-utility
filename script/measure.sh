@@ -139,6 +139,6 @@ if [ "${1}" = --ci-mode ]; then
         echo
         echo "Concern(s) of category WARNING found." >&2
 
-        exit 2
+        #exit 2
     fi
 fi

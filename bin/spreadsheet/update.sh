@@ -19,4 +19,4 @@ fi
 
 BODY=$(printf '{"search":"%s","replace":"%s","x-offset":%d}' "${SEARCH}" "${REPLACE}" "${OFFSET}")
 ADDRESS=$(ifdata -pa docker0)
-curl --silent --request POST --header 'Content-Type: application/json' --data "${BODY}" "http://${ADDRESS}:8080/spreadsheet"
+curl --silent --request POST --header 'Content-Type: application/json' --data "${BODY}" "http://${ADDRESS}:8080/v1/spreadsheet"

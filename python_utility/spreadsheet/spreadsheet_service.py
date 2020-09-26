@@ -10,7 +10,8 @@ class SpreadsheetService:
         try:
             from python_utility.build import Build
         except ImportError:
-            from python_utility.build_undefined import Build
+            # TODO: Understand the best practice.
+            from python_utility.build_undefined import Build  # type: ignore
 
         return 'Version: ' + Build.GIT_TAG + '\n' \
                + 'Git hash: ' + Build.GIT_HASH + '\n' \

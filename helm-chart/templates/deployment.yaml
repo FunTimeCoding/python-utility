@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # This used to be python-utility-deployment to be better distinguishable, but a suffix of the kind that it is seems redundant.
+  name: python-utility
+  labels:
+    app: python-utility-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-utility-label
+  template:
+    metadata:
+      labels:
+        app: python-utility-label
+    spec:
+      containers:
+      - name: python-utility
+        image: '{{ .Values.ImagePrefix }}/python-utility:{{ .Chart.AppVersion }}'
+        command: ["spreadsheet-service"]
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: python-utility-configuration
+          mountPath: /root/.python-utility.yaml
+          subPath: python-utility.yaml
+        - name: python-utility-configuration
+          mountPath: /root/.config/gspread/service_account.json
+          subPath: service_account.json
+      volumes:
+        - name: python-utility-configuration
+          configMap:
+            # Maintained by ansible-provisioning
+            name: python-utility
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred

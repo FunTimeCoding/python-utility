@@ -18,12 +18,14 @@ python3
 gitpython
 mypy
 lxml
+uwsgi
 passlib
 sitepackages
 aiohttp
 windll
 pysqlite
 typer
+tempfile
 
 # pytest
 pytest
@@ -33,6 +35,8 @@ xunit
 addopts
 junitxml
 coveragerc
+lf
+capfd
 
 # pylint
 pylint

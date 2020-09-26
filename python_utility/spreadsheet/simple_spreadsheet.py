@@ -5,8 +5,12 @@ from python_utility.configuration import Configuration
 class SimpleSpreadsheet:
     def __init__(self):
         configuration = Configuration('~/.python-utility.yaml')
+        self.identifier = configuration.get('spreadsheet')
+        self.worksheet = None
+
+    def connect(self):
         connection = gspread.service_account()
-        spreadsheet = connection.open_by_key(configuration.get('spreadsheet'))
+        spreadsheet = connection.open_by_key(self.identifier)
         self.worksheet = spreadsheet.get_worksheet(0)
 
     def read(self, spreadsheet_range):

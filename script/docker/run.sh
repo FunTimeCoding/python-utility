@@ -7,6 +7,17 @@ SCRIPT_DIRECTORY=$(
 )
 # shellcheck source=/dev/null
 . "${SCRIPT_DIRECTORY}/../../configuration/project.sh"
+# shellcheck source=/dev/null
+. "${HOME}/.virtualization-tools.sh"
+
+if [ "${1}" = --help ]; then
+    echo "Usage: ${0} --development|[GIT_TAG]"
+    echo "Examples:"
+    echo "In development: ${0} --development"
+    echo "In production: ${0} 1.0.0"
+
+    exit 0
+fi
 
 if [ "${1}" = --development ]; then
     DEVELOPMENT=true
@@ -16,10 +27,26 @@ else
 fi
 
 if [ "${DEVELOPMENT}" = true ]; then
-    WORKING_DIRECTORY=$(pwd)
-    # shellcheck disable=SC2068
-    docker run --interactive --tty --rm --name "${PROJECT_NAME_DASH}" --volume "${WORKING_DIRECTORY}:/${PROJECT_NAME_DASH}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}" $@
+    IMAGE="${PROJECT_NAME_DASH}-snapshot"
 else
+    GIT_TAG="${1}"
+
+    if [ "${GIT_TAG}" = '' ]; then
+        GIT_TAG='latest'
+        shift
+    fi
+
+    IMAGE="${PRIVATE_REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:${GIT_TAG}"
+fi
+
+SYSTEM=$(uname -o)
+
+if [ "${SYSTEM}" = 'Msys' ]; then
+    # TODO: Add volume parameters that work on Windows.
     # shellcheck disable=SC2068
-    docker run --interactive --tty --rm --name "${PROJECT_NAME_DASH}" "${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}" $@
+    winpty docker run --interactive --tty --rm --name "${PROJECT_NAME_DASH}-instance" --publish 8080:8080 "${IMAGE}" ${@}
+else
+    # TODO: Always publish port 8080, make configurable or remove? --publish and all --volume are specific to this project.
+    # shellcheck disable=SC2068
+    docker run --interactive --tty --rm --name "${PROJECT_NAME_DASH}-instance" --publish 8080:8080 --volume "${PWD}/tmp:/go/src/app/tmp" --volume ~/.config/gspread:/root/.config/gspread --volume ~/.python-utility.yaml:/root/.python-utility.yaml "${IMAGE}" ${@}
 fi

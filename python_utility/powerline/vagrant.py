@@ -13,7 +13,7 @@ import re
 from powerline.segments import Segment, with_docstring
 from powerline.theme import requires_segment_info, requires_filesystem_watcher
 
-from python_utility.command_process import CommandProcess
+from python_utility.command_process import CommandProcess, CommandFailed
 
 
 @requires_filesystem_watcher
@@ -62,18 +62,16 @@ class VagrantSegment(Segment):
 
     @staticmethod
     def vagrant_status(current_directory: str) -> str:
-        command_output = re.sub(
-            pattern=' +',
-            repl=' ',
-            string=CommandProcess(
-                arguments=['vagrant', 'status'],
-                path=current_directory,
-            ).standard_output.splitlines()[2]
-        ).strip("default ").strip(" (virtualbox)")
-
-        if command_output in VagrantSegment.STATUSES:
-            result = command_output
-        else:
+        try:
+            result = re.sub(
+                pattern=' +',
+                repl=' ',
+                string=CommandProcess(
+                    arguments=['vagrant', 'status'],
+                    path=current_directory,
+                ).standard_output.splitlines()[2]
+            ).strip("default ").strip(" (virtualbox)")
+        except CommandFailed:
             result = 'unknown'
 
         return result

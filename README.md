@@ -41,6 +41,49 @@ Run the main program inside the container:
 docker run -it --rm funtimecoding/python-utility
 ```
 
+Update a spreadsheet:
+
+```sh
+bin/spreadsheet/update.sh Jane 2020-01-01
+```
+
+
+### Docker commands
+
+Build image:
+
+```sh
+docker build --tag python-utility-snapshot .
+```
+
+Log into bash:
+
+```sh
+docker run --rm -it python-utility-snapshot bash
+```
+
+Pass arguments to pu:
+
+```sh
+docker run --rm -it python-utility-snapshot pu --help
+```
+
+Start spreadsheet service:
+
+```sh
+docker run --rm -it python-utility-snapshot spreadsheet-service
+```
+
+
+### Docker wrapped in shell scripts
+
+```sh
+script/docker/build.sh
+script/docker/run.sh --development bash
+script/docker/run.sh --development pu --help
+script/docker/run.sh --development spreadsheet-service
+```
+
 
 ## Development
 
@@ -92,4 +135,10 @@ Show files the package installed:
 
 ```sh
 dpkg-query --listfiles python3-python-utility
+```
+
+Replace Powerline daemon to test changes manually:
+
+```sh
+bin/powerline/replace-daemon.sh
 ```

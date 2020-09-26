@@ -19,17 +19,27 @@ def test_curses_exists():
     assert application.curses_exists() is True
 
 
+def test_main():
+    # This runs into a py.test error, but it covers a line.
+    with pytest.raises(SystemExit):
+        PythonUtility([]).main()
+
+
 def test_curses_does_not_exist():
     modules['curses'] = None
-    application = PythonUtility([])
-    assert application.curses_exists() is False
+    assert PythonUtility([]).curses_exists() is False
 
 
 def test_run_without_curses(capfd):
     modules['curses'] = None
-    application = PythonUtility([])
-    exit_code = application.run()
+    assert PythonUtility([]).run() == 1
     standard_output, standard_error = capfd.readouterr()
-    assert exit_code == 1
     assert standard_output.strip() == 'Curses library not found.'
     assert standard_error.strip() == ''
+
+
+def test_main_without_curses():
+    modules['curses'] = None
+
+    with pytest.raises(SystemExit):
+        PythonUtility([]).main()

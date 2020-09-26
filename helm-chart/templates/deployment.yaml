@@ -23,5 +23,18 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - name: python-utility-configuration
+          mountPath: /root/.python-utility.yaml
+          subPath: python-utility.yaml
+        - name: python-utility-configuration
+          mountPath: /root/.config/gspread/service_account.json
+          subPath: service_account.json
+      volumes:
+        - name: python-utility-configuration
+          configMap:
+            # Maintained by ansible-provisioning
+            name: python-utility
+      restartPolicy: Always
       imagePullSecrets:
         - name: regcred

@@ -18,6 +18,12 @@ class SpreadsheetService:
                + 'Build date: ' + Build.BUILD_DATE + '\n'
 
     @cherrypy.expose
+    def index(self):
+        cherrypy.response.headers['Content-Type'] = 'text/plain'
+
+        return 'Hello friend.\n'
+
+    @cherrypy.expose
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
     def spreadsheet(self):
@@ -51,4 +57,6 @@ class SpreadsheetService:
 
     @cherrypy.expose
     def status(self):
+        cherrypy.response.headers['Content-Type'] = 'text/plain'
+
         return SpreadsheetService.read_status()

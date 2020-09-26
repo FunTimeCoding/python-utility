@@ -11,4 +11,4 @@ class SpreadsheetWebServer:
     @staticmethod
     def run():
         cherrypy.config.update({'server.socket_host': '0.0.0.0'})
-        cherrypy.quickstart(SpreadsheetService())
+        cherrypy.quickstart(root=SpreadsheetService(), script_name='/v1')

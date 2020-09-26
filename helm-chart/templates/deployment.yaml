@@ -19,6 +19,7 @@ spec:
       containers:
       - name: python-utility
         image: '{{ .Values.ImagePrefix }}/python-utility:{{ .Chart.AppVersion }}'
+        command: ["spreadsheet-service"]
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

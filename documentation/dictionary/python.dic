@@ -26,6 +26,7 @@ windll
 pysqlite
 typer
 tempfile
+TemporaryDirectory
 
 # pytest
 pytest

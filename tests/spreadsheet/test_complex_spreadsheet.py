@@ -2,8 +2,8 @@ from os import mkdir
 from os.path import exists, join
 from shutil import rmtree
 
-from python_utility.spreadsheet.complex_spreadsheet import ComplexSpreadsheet, \
-    TOKEN_FILE
+from python_utility.spreadsheet.complex_spreadsheet import \
+    ComplexSpreadsheet, TOKEN_FILE
 from tests.constants import TEMPORARY_DIRECTORY
 
 

@@ -31,7 +31,8 @@ def test_command_fails_with_output() -> None:
         CommandProcess(arguments=['tests/fixture/fails-with-output.sh'])
 
     assert 'test stdout' in str(exception.value)
-    assert exception.value.get_command() == 'tests/fixture/fails-with-output.sh'
+    assert exception.value.get_command() == \
+           'tests/fixture/fails-with-output.sh'
     assert exception.value.get_return_code() == 1
     assert exception.value.get_standard_output() == 'test stdout'
     assert exception.value.get_standard_error() == 'test stderr'

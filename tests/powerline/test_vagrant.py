@@ -7,7 +7,7 @@ from python_utility.powerline.vagrant import VagrantSegment
 from tests.constants import TEMPORARY_DIRECTORY
 
 
-# TODO: The vagrant subprocess cannot access the temporary directory. What is
+# TODO: The vagrant sub-process cannot access the temporary directory. What is
 #  a better practice? The insecure directory above accepted on SonarQube for
 #  now.
 # TEMPORARY_DIRECTORY = tempfile.TemporaryDirectory(dir='/tmp').name

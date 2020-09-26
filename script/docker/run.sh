@@ -33,28 +33,20 @@ else
 
     if [ "${GIT_TAG}" = '' ]; then
         GIT_TAG='latest'
+        shift
     fi
 
     IMAGE="${PRIVATE_REGISTRY_SERVER}/${VENDOR_NAME_LOWER}/${PROJECT_NAME_DASH}:${GIT_TAG}"
 fi
 
-SYSTEM=$(uname)
+SYSTEM=$(uname -o)
 
-# TODO: What is the output of uname on Git Bash on Windows 10?
-if [ "${SYSTEM}" = 'msys' ]; then
+if [ "${SYSTEM}" = 'Msys' ]; then
     # TODO: Add volume parameters that work on Windows.
-    winpty docker run --interactive --tty --rm --name "${PROJECT_NAME_DASH}-instance" --publish 8080:8080 "${IMAGE}"
+    # shellcheck disable=SC2068
+    winpty docker run --interactive --tty --rm --name "${PROJECT_NAME_DASH}-instance" --publish 8080:8080 "${IMAGE}" ${@}
 else
-    # TODO: Make it possible to pass arguments to the container?
-    #if [ "${DEVELOPMENT}" = true ]; then
-    #    WORKING_DIRECTORY=$(pwd)
-    #    # shellcheck disable=SC2068
-    #    docker run --interactive --tty --rm --name "${PROJECT_NAME_DASH}-instance" --volume "${WORKING_DIRECTORY}:/${PROJECT_NAME_DASH}" "${IMAGE}" $@
-    #else
-    #    # shellcheck disable=SC2068
-    #    docker run --interactive --tty --rm --name "${PROJECT_NAME_DASH}-instance" "${IMAGE}" $@
-    #fi
-
-    # TODO: Always publish port 8080, make configurable or remove?
-    docker run --interactive --tty --rm --name "${PROJECT_NAME_DASH}-instance" --publish 8080:8080 --volume "${PWD}/tmp:/go/src/app/tmp" "${IMAGE}"
+    # TODO: Always publish port 8080, make configurable or remove? --publish and all --volume are specific to this project.
+    # shellcheck disable=SC2068
+    docker run --interactive --tty --rm --name "${PROJECT_NAME_DASH}-instance" --publish 8080:8080 --volume "${PWD}/tmp:/go/src/app/tmp" --volume ~/.config/gspread:/root/.config/gspread --volume ~/.python-utility.yaml:/root/.python-utility.yaml "${IMAGE}" ${@}
 fi

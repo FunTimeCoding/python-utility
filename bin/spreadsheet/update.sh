@@ -18,5 +18,7 @@ if [ "${OFFSET}" = '' ]; then
 fi
 
 BODY=$(printf '{"search":"%s","replace":"%s","x-offset":%d}' "${SEARCH}" "${REPLACE}" "${OFFSET}")
+# TODO: Read server from a configuration, fall back to localhost or ADDRESS? How to know if spreadsheet-service was ran on the host or inside a container?
 ADDRESS=$(ifdata -pa docker0)
-curl --silent --request POST --header 'Content-Type: application/json' --data "${BODY}" "http://${ADDRESS}:8080/v1/spreadsheet"
+SERVER="${ADDRESS}:8080"
+curl --silent --request POST --header 'Content-Type: application/json' --data "${BODY}" "http://${SERVER}/v1/spreadsheet"

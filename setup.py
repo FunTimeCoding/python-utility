@@ -36,7 +36,7 @@ setup(
     python_requires='>=3.2',
     entry_points={
         'console_scripts': [
-            'pu=python_utility.python_utility:'
+            'pyut=python_utility.python_utility:'
             'PythonUtility.main',
             'spreadsheet-service=python_utility.spreadsheet'
             '.spreadsheet_web_server:SpreadsheetWebServer.main',

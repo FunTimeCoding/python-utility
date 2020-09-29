@@ -15,6 +15,6 @@
 /.mypy_cache
 *.egg-info
 *.pyc
+/python_utility/build.py
 /token.pickle
 /credentials.json
-/python_utility/build.py

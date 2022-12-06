@@ -17,3 +17,4 @@ google-auth-httplib2
 google-auth-oauthlib
 gspread # simplified library around Google spreadsheets
 cherrypy # web server library
+alfred-workflow-tddschn # makes 3.10 required

@@ -28,6 +28,7 @@ setup(
     keywords='development project skeleton',
     packages=[
         'python_utility',
+        'python_utility.alfred',
         'python_utility.language_example',
         'python_utility.powerline',
         'python_utility.spreadsheet',

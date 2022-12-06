@@ -1,4 +1,4 @@
-FROM python:3.7-slim-buster
+FROM python:3.10-slim-buster
 MAINTAINER Alexander Reitzel
 WORKDIR /usr/src/app
 RUN python -m pip install --upgrade pip
